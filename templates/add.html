@@ -1,0 +1,72 @@
+{% extends "invlayout.html" %}
+{% block title %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="row gx-4 gx-lg-5 justify-content-center mb-5 centered w-100 mx-auto">
+    <div class="col-lg-6">
+        <h3 class="text-light text-center">NEW ADDITIONS</h3>
+    <form id="addinv" action="/add" method="POST" enctype="multipart/form-data">
+
+        <!-- Guitar name input-->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="name" name="name" type="text" placeholder="name of guitar" data-sb-validations="required" />
+            <label for="name">Name</label>
+            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+        </div>
+
+        <!-- Serial number input-->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="serial" name="serial" type="text" placeholder="serial #" data-sb-validations="required" />
+            <label for="serial">Serial</label>
+            <div class="invalid-feedback" data-sb-feedback="serial:required">Please enter the serial number.</div>
+        </div>
+        <!-- Price input-->
+        <div class="form-floating mb-3">
+            <input class="form-control" id="price" name="price" type="number" step='0.01' placeholder="price" data-sb-validations="required" />
+            <label for="price">Price</label>
+            <div class="invalid-feedback" data-sb-feedback="price:required">Please ented a price.</div>
+        </div>
+        <!-- Photo input-->
+        <div class="form-floating mb-3">
+            <div id="picuploads"><i class="bi bi-camera" id="camera"></i></div>
+            <input class="form-control opacity-0" id="photo" name='photo' type="file" accept="image/*" multiple placeholder="upload photos" />
+            <div id="frames" class="d-flex justify-content-evenly p-2 align-middle"></div>
+        </div>
+        <!-- Summary input-->
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="summary" name='summary' type="text" placeholder="Enter a brief summary here..." style="height: 5rem" data-sb-validations="required"></textarea>
+            <label for="about">summary</label>
+            <div class="invalid-feedback" data-sb-feedback="about:required">A summary is required.</div>
+        </div>
+        <!-- Message input-->
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="description" name='about' type="text" placeholder="Enter your description here..." style="height: 10rem" data-sb-validations="required"></textarea>
+            <label for="about">description</label>
+            <div class="invalid-feedback" data-sb-feedback="about:required">A description is required.</div>
+        </div>
+
+        <!-- Submit Button-->
+        <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton" type="submit">Submit</button></div>
+
+    
+    </form>
+    
+</div>
+</div>    
+
+<script>
+$(document).ready(function(){
+    $('#photo').change(function(){
+        $("#frames").html('');
+        for (var i = 0; i < $(this)[0].files.length; i++) {
+            $("#frames").append('<img src="'+window.URL.createObjectURL(this.files[i])+'" class="img-fluid rounded mx-auto p-1" id="previewpic" />');
+        }
+    });
+});
+</script>
+
+
+{% endblock %}

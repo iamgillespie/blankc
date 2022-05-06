@@ -1,0 +1,45 @@
+{% extends "invlayout.html" %}
+{% block title %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="row gx-4 gx-lg-5 justify-content-center mb-5 centered w-100 mx-auto">
+    <div class="col-lg-6">
+        <h3 class="text-light text-center">SETTINGS</h3>
+        <hr class="divider-light mx-auto" />
+
+        <h6 class="p1 text-light">User accounts</h6>
+        {% for i in usrs %}
+        <form id="usrlist" action="/usrmod" method="POST" enctype="multipart/form-data">
+
+            <!-- Users input-->
+            <div class="form mb-3">
+            <input value="{{ i['email'] }}" name="{{ i['email'] }}" type="text" hidden>
+            <button class="btn h-auto" id="submitButton" type="submit"><span class="text-light"><i class="bi bi-gear text-info px-3"></i>{{ i['email'] }}</span></button>
+            </div> 
+        </form>
+        {% endfor %}
+            <a href="/register" class="btn h-auto" id="submitButton" type="submit"><span class="text-light"><i class="bi bi-person text-info px-3"></i>Create account</span></a>
+        <hr class="divider-light mx-auto" />
+
+    <form id="aboutedit" action="/aboutedit" method="POST" enctype="multipart/form-data">
+
+        <!-- About input-->
+        <div class="form mb-3">
+            <h6 class="p1 text-light">Edit the about description...</h6>
+            <textarea class="form-control" id="aboutedit" name='aboutedit' type="text" placeholder="This will show up in the about page description..." style="height: 20vh" data-sb-validations="required">{{ about }}</textarea>
+            
+            <div class="invalid-feedback" data-sb-feedback="about:required"></div>
+        </div>
+
+        <!-- Submit Button-->
+        <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton" type="submit">Submit</button></div>
+    </form>
+    
+</div>
+</div>    
+
+
+{% endblock %}
