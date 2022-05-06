@@ -13,15 +13,12 @@
 }
 </script>
 
-<div class="">
-    <form class="form-control border-0 bg-dark" id="del" action="/inv" method="POST" enctype="multipart/form-data">
-    <table class="table table-dark table-borderless table-responsive table-sm">
-    <tr> 
-        <th>
-            <a href="#" id="selectall" name="selectall" autocomplete="off" checked onclick="eventCheckBox()">
-                <i class="bi bi-check2-all"></i>
-            </a>
-          </th>       
+<div class="container-fluid px-5">
+    <table class="table table-dark table-responsive table-sm">
+    <tr>
+    <th class="text-muted">
+        edit
+    </th>       
       <th>
           name
       </th>
@@ -40,8 +37,13 @@
     </tr>
     {% for i in rows %}
     <tr>
-        <td class="d-flex">
-            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" name="{{ i['serial'] }}" value="{{ i['serial'] }}" aria-label="...">
+        <td>
+            <form class="border-0" id="del" action="/edit" method="POST" enctype="multipart/form-data">
+                <input name="edit" type="text" id="edit" value="{{ i['serial'] }}" hidden>
+            <button id="submitButton" type="submit" class="btn btn-xs" name="edit">
+                <i class="bi bi-pencil text-info"></i>
+            </button>
+            </form>
         </td>
         <td>
             {{ i['name'] }}
@@ -55,25 +57,10 @@
         <td>
             ${{ i['price'] }}
         </td>
-        <td><form>
-            <button class="btn btn-outline-light" type="button" name="edit" value="{{ i['serial'] }}" name="edit"><i class="bi bi-pencil"></i></button>
-            </form>
-        </td>
 
     </tr>
     {% endfor %}
     </table>
-
-    <div class="mx-auto w-auto float-start row text-light">
-        <div class="col">
-            <button id="submitButton" type="submit" class="btn btn-xs"><i class="bi bi-trash text-danger fs-2"></i></button>
-        </div>
-        <div class="col">
-            <a class="btn btn-xs w-100 px-4" href="/add"><i class="bi bi-plus-square text-success fs-2"></i></a>
-        </div>
-    </div>
-
-    </form>
   </div>
 
 {% endblock %}

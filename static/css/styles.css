@@ -11635,3 +11635,9 @@ transition: filter 500ms;
 filter: sepia(0);
 filter: drop-shadow(3px 4px 4px #000);
   }
+
+.panel-edit {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+}

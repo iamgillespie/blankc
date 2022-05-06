@@ -263,6 +263,59 @@ def inventory():
         crumb = '/inv'
         return render_template("/login.html", crumb = crumb)
 
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+
+    if request.method == "POST":
+
+        serial = request.form['edit']
+
+        #gallery = os.listdir(path)
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+        gallery = cur.fetchall()
+        cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+        info = cur.fetchall()
+
+        return render_template('/edit.html', gallery = gallery, info = info)
+
+    return redirect('/inv')
+
+@app.route('/editsubmit', methods=['GET', 'POST'])
+def editsubmit():
+
+    if request.method == "POST":
+        edit = request.form['edit']
+        name = request.form['name']
+        summary = request.form['summary']
+        about = request.form['about']
+        price = request.form['price']
+        serial = request.form['serial']
+
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+
+        con.execute('UPDATE guitars SET (name, summary, about, price, serial) = (?, ?, ?, ?, ?) WHERE serial = ?', (name, summary, about, price, serial, edit))
+        con.commit()
+        con.execute('UPDATE photos SET serial = ? WHERE serial = ?', (serial, edit))
+        con.commit()
+        #gallery = os.listdir(path)
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+        gallery = cur.fetchall()
+        cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+        info = cur.fetchall()
+        
+        flash('records updated')
+        return render_template('/edit.html', gallery = gallery, info = info)
+
+    return redirect('/inv')
+
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if 'user' in session:
