@@ -283,6 +283,26 @@ def edit():
 
     return redirect('/inv')
 
+@app.route('/editphoto', methods=['GET', 'POST'])
+def editphoto():
+
+    if request.method == "POST":
+
+        serial = request.form['edit']
+
+        #gallery = os.listdir(path)
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+        gallery = cur.fetchall()
+        cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+        info = cur.fetchall()
+
+        return render_template('/editphoto.html', gallery = gallery, info = info)
+
+    return redirect('/inv')
+
 @app.route('/editsubmit', methods=['GET', 'POST'])
 def editsubmit():
 
