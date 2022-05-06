@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta, date
 from tempfile import mkdtemp
-import smtplib
+#import smtplib
 
 app = Flask(__name__)
 
@@ -249,7 +249,7 @@ def inventory():
                 cur.execute('SELECT photo FROM photos WHERE serial = ?', (delete,))
                 # query pulls up the path of the photo from the photo column for deletion in loop.
                 for j in cur.fetchall():
-                    os.remove(j[0])
+                    os.remove(abpath + j[0])
 
                 con.execute("DELETE FROM guitars WHERE serial = ?", (delete,))
                 con.commit()
