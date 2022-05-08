@@ -9,9 +9,9 @@
                 
                 <div class="col-lg-4 col-lg-12 mb-4 text-light">
                     <div class="p-5">
-                    <form id="edit" action="/editselect" method="POST" enctype="multipart/form-data">
+                    <form id="edit" action="/updateguitars" method="POST" enctype="multipart/form-data">
                     {% for j in info %}
-                    <input hidden w-auto" id="edit" name="edit" type="text" value="{{ j['serial'] }}">
+                    <input hidden id="edit" name="edit" type="text" value="{{ j['serial'] }}">
                     <h1 class="display-6"><input class="panel-edit w-auto" id="name" name="name" type="text" value="{{ j['name'] }}"></h1>
                     <p class="text-sm"><input class="panel-edit w-auto" id="summary" name="summary" type="text" value="{{ j['summary'] }}"></p>
                     <p class="text-sm"><textarea class="panel-edit w-100" id="editabout" name="about" type="text" rows="5">{{ j['about'] }}</textarea></p>

@@ -384,16 +384,27 @@ def delpic():
 
     return redirect('/inv')    
 
-@app.route('/editselect', methods=['GET', 'POST'])
-def editselect():
+@app.route('/updateguitars', methods=['GET', 'POST'])
+def updateguitars():
 
     if request.method == "POST":
-        serial = request.form['photoedit']
-        print(serial)
+        serial = request.form['serial']
+        name = request.form['name']
+        summary = request.form['summary']
+        about = request.form['about']
+        price = request.form['price']
+        edit = request.form['edit']
 
         con = sql.connect(abpath + '/blankc.db')
         con.row_factory = sql.Row
         cur = con.cursor()
+
+        con.execute('UPDATE guitars SET (name, summary, about, price, serial) = (?, ?, ?, ?, ?) WHERE serial = ?', (name, summary, about, price, serial, edit))
+        con.commit()
+        con.execute('UPDATE photos SET serial = ? WHERE serial = ?', (serial, edit,))
+        con.commit()
+
+
         cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
         gallery = cur.fetchall()
         cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
