@@ -11484,7 +11484,7 @@ header.masthead h1, header.masthead .h1 {
 }
 
 .carousel-caption {
-  background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.7), rgba(0,0,0,0));
+  background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.2), rgba(0,0,0,0));
   left: 0;
   right: 0;
   height: 100%;
