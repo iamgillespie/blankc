@@ -11306,10 +11306,7 @@ html {
   scroll-padding-top: calc(4.5rem - 1px);
 }
 
-body {
-  width: 100%;
-  height: 100%;
-}
+
 
 .page-section {
   padding: 8rem 0;
@@ -11679,4 +11676,11 @@ input[type="radio"]:checked+label#radioimg{
 input[type="checkbox"]:checked+label#checkimg{ 
   filter: grayscale(1);
   opacity: .2;
+}
+
+#ooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
 }
