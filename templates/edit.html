@@ -4,14 +4,12 @@
 {% endblock %}
 {% block main %}
 
-      <!-- Display details -->
-      <section class="page-section" id="details">
-        <div class="container h-100 w-100">
+        <div class="container w-100">
             <div class="row h-100">
                 
                 <div class="col-lg-4 col-lg-12 mb-4 text-light">
                     <div class="p-5">
-                    <form id="edit" action="/editsubmit" method="POST" enctype="multipart/form-data">
+                    <form id="edit" action="/editselect" method="POST" enctype="multipart/form-data">
                     {% for j in info %}
                     <input hidden w-auto" id="edit" name="edit" type="text" value="{{ j['serial'] }}">
                     <h1 class="display-6"><input class="panel-edit w-auto" id="name" name="name" type="text" value="{{ j['name'] }}"></h1>
@@ -34,10 +32,10 @@
 
                     </div>
                     </div>
-                    <div class="d-grid w-25 mx-auto mt-5">
-                        <form id="photo" action="/editsubmit" method="POST" enctype="multipart/form-data">
+                    <div class="d-grid w-25 mx-auto text-center">
+                        <form id="photoedit" action="/editphoto" method="POST" enctype="multipart/form-data">
                             {% for j in info %}
-                    <button class="btn btn-primary btn-xl" value="{{ j['serial'] }}" type="submit">Edit photos <i class="bi bi-arrow-right-circle"></i></button>
+                    <button class="btn btn-primary btn-xl" name="photoedit" value="{{ j['serial'] }}" type="submit">Edit photos <i class="bi bi-arrow-right-circle"></i></button>
                             {% endfor %}
                     </form>
                 </div>
@@ -45,8 +43,8 @@
         </div>
 
 
+<a class="w-auto text-light" id="goback" href="/inv"><i class="bi bi-arrow-left-circle"></i></a>
+        
 
-        <a class="w-auto text-light" id="goback" href="/inv"><i class="bi bi-x-lg fs-1"></i></a>
-    </section>
 
 {% endblock %}

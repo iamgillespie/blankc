@@ -234,14 +234,13 @@ def inventory():
         if authusrs == []:
             return redirect('/logout')
 
-        con = sql.connect(abpath + '/blankc.db')
-        con.row_factory = sql.Row
-        cur = con.cursor()
         cur.execute('SELECT * FROM guitars')
         rows = cur.fetchall()
 
+        ## delete records with the select all function
         if request.method == "POST":
-            deletethis = request.form
+            #edit = request.form['edit']
+            deletethis = request.form.getlist('deletethis')
 
             for i in deletethis:
                 delete = i
@@ -255,7 +254,8 @@ def inventory():
                 con.execute("DELETE FROM photos WHERE serial = ?", (delete,))
                 con.commit()
 
-            return redirect('/inv')
+                cur.execute('SELECT * FROM guitars')
+                rows = cur.fetchall()                
 
         return render_template('inv.html', rows = rows)
 
@@ -285,10 +285,10 @@ def edit():
 
 @app.route('/editphoto', methods=['GET', 'POST'])
 def editphoto():
-
+    # load pages for menus
     if request.method == "POST":
 
-        serial = request.form['edit']
+        serial = request.form['photoedit']
 
         #gallery = os.listdir(path)
         con = sql.connect(abpath + '/blankc.db')
@@ -299,30 +299,98 @@ def editphoto():
         cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
         info = cur.fetchall()
 
-        return render_template('/editphoto.html', gallery = gallery, info = info)
+        return render_template('/editphoto.html', gallery = gallery, info = info)   
 
     return redirect('/inv')
 
-@app.route('/editsubmit', methods=['GET', 'POST'])
-def editsubmit():
-
+@app.route('/updatecover', methods=['GET', 'POST'])
+def updatecover():
+    #update cover photo
     if request.method == "POST":
-        edit = request.form['edit']
-        name = request.form['name']
-        summary = request.form['summary']
-        about = request.form['about']
-        price = request.form['price']
+    
+        cover = request.form['cover']
+
         serial = request.form['serial']
 
+        #update photo records...
         con = sql.connect(abpath + '/blankc.db')
         con.row_factory = sql.Row
-        cur = con.cursor()
+        cur = con.cursor()      
+        con.execute("""UPDATE photos SET 'primary' = 'no' WHERE "primary" = 'yes' AND serial = (?)""", (serial,))
+        con.execute("""UPDATE photos SET 'primary' = 'yes' WHERE photo = (?)""", (cover,))
+        con.commit()
 
-        con.execute('UPDATE guitars SET (name, summary, about, price, serial) = (?, ?, ?, ?, ?) WHERE serial = ?', (name, summary, about, price, serial, edit))
-        con.commit()
-        con.execute('UPDATE photos SET serial = ? WHERE serial = ?', (serial, edit))
-        con.commit()
         #gallery = os.listdir(path)
+        cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+        gallery = cur.fetchall()
+        cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+        info = cur.fetchall()
+
+        flash('Cover photo updated successfully!')
+        return render_template('/editphoto.html', gallery = gallery, info = info)
+
+
+    return redirect('/inv')
+
+@app.route('/delpic', methods=['GET', 'POST'])
+def delpic():
+    #update cover photo
+    if request.method == "POST":
+    
+        cover = request.form.getlist('cover') #containts path of file
+
+        serial = request.form['serial']
+
+        #allthethings = request.form
+
+        #delete from database...
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor() 
+        for i in cover:
+            # Remove records UNLESS primary photo is yes...
+            delete = i
+            cur.execute("""DELETE FROM photos WHERE photo = ? AND "primary" = "no" """, (delete,))
+            con.commit()
+
+### Loop that will delete records with select all
+#
+#        if request.method == "POST":
+#            deletethis = request.form
+#
+#            for i in deletethis:
+#                delete = i
+#                cur.execute('SELECT photo FROM photos WHERE serial = ?', (delete,))
+#                # query pulls up the path of the photo from the photo column for deletion in loop.
+#                for j in cur.fetchall():
+#                    os.remove(abpath + j[0])
+#
+#                con.execute("DELETE FROM guitars WHERE serial = ?", (delete,))
+#                con.commit()
+#                con.execute("DELETE FROM photos WHERE serial = ?", (delete,))
+#                con.commit()
+
+        #TODO remove the files...
+
+        #gallery = os.listdir(path)
+        cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+        gallery = cur.fetchall()
+        cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+        info = cur.fetchall()
+
+        flash('Changes made successfully!')
+        return render_template('/editphoto.html', gallery = gallery, info = info)
+
+
+    return redirect('/inv')    
+
+@app.route('/editselect', methods=['GET', 'POST'])
+def editselect():
+
+    if request.method == "POST":
+        serial = request.form['photoedit']
+        print(serial)
+
         con = sql.connect(abpath + '/blankc.db')
         con.row_factory = sql.Row
         cur = con.cursor()
@@ -391,12 +459,73 @@ def add():
                 con.execute("UPDATE photos SET 'primary' = (?) WHERE photo = (?)", ('yes', photopath,))
                 con.commit()
 
-                flash('upload successful')
-                return render_template('/add.html')
+
+                con = sql.connect(abpath + '/blankc.db')
+                con.row_factory = sql.Row
+                cur = con.cursor()
+                cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+                gallery = cur.fetchall()
+                cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+                info = cur.fetchall()
+
+                return render_template('/edit.html', gallery = gallery, info = info)
+
+                #flash('upload successful')
+                #return render_template('/add.html')
         return render_template("/add.html")
     else:
         crumb = '/add'
         return render_template("/login.html", crumb = crumb)
+
+
+@app.route('/addpic', methods=['GET', 'POST'])
+def addpic():
+    if 'user' in session:
+        user = session['user']
+
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        cur.execute("SELECT email FROM users WHERE email = ? AND status = 'admin'", (user,))
+        authusrs = cur.fetchall()
+
+        if authusrs == []:
+            return redirect('/logout')
+
+        con = sql.connect(abpath + '/blankc.db')
+        con.row_factory = sql.Row
+        cur = con.cursor()
+        if request.method == "POST":
+
+            serial = request.form['serial']
+            name = request.form['name']
+
+            photos = os.listdir(abpath + path)
+
+            for photo in request.files.getlist('photo'):
+                prefix = name + serial
+                photo.save(os.path.join(abpath + path, prefix + '-' + photo.filename))
+                photopath = str(os.path.join(path, prefix + '-' + photo.filename))
+
+                #add to photo database
+                con.execute('INSERT INTO photos (serial, photo) VALUES (?, ?)', (serial, photopath))
+                con.commit()
+
+            con = sql.connect(abpath + '/blankc.db')
+            con.row_factory = sql.Row
+            cur = con.cursor()
+            cur.execute('SELECT photos.photo, guitars.* FROM guitars LEFT OUTER JOIN photos ON guitars.serial = photos.serial WHERE guitars.serial = ?', (serial,))
+            gallery = cur.fetchall()
+            cur.execute('SELECT * FROM guitars WHERE serial = ?', (serial,))
+            info = cur.fetchall()
+
+            return render_template('/editphoto.html', gallery = gallery, info = info)
+
+        #return render_template("/add.html")
+    else:
+        crumb = '/add'
+        return render_template("/login.html", crumb = crumb)
+
 
 @app.route('/panel', methods=['GET', 'POST'])
 def panel():
