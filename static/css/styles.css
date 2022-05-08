@@ -11678,9 +11678,3 @@ input[type="checkbox"]:checked+label#checkimg{
   opacity: .2;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;            /* Footer height */
-}
