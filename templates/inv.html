@@ -7,11 +7,11 @@
 <!--SELECT ALL CHECKBOXES-->
 <script>
     function eventCheckBox() {
-  let checkboxs = document.getElementsByTagName("input");
-  for(let i = 0; i < checkboxs.length ; i++) { //zero-based array
-    checkboxs[i].checked = !checkboxs[i].checked;
-  }
-}
+        let checkboxs = document.getElementsByTagName("input");
+        for (let i = 0; i < checkboxs.length; i++) { //zero-based array
+            checkboxs[i].checked = !checkboxs[i].checked;
+        }
+    }
 </script>
 
 <div class="container-fluid px-5">
@@ -20,62 +20,65 @@
     -->
     <!-- using inv path -->
     <form class="border-0" id="editinv" method="POST" enctype="multipart/form-data">
-    <table class="table table-dark table-borderless table-responsive table-sm">
-    <tr>
-    <th class="text-muted">
-        edit
-    </th>       
-      <th>
-          name
-      </th>
-      <th>
-          serial
-      </th>
-      <th>
-          about
-      </th>
-      <th>
-          price
-      </th>
-      <th>
-        <a href="#" id="selectall" name="selectall" autocomplete="off" checked onclick="eventCheckBox()">
-            <i class="bi bi-check2-all"></i>
-        </a>
-      </th>
-    </tr>
-    {% for i in rows %}
-    <tr>
-        <td>
-            
-            <button id="editguitar" type="submit" class="btn btn-xs" name="edit" value="{{ i['serial'] }}" formaction="/edit">
-                <i class="bi bi-pencil text-info"></i>
-            </button>
-            
-        </td>
-        <td>
-            {{ i['name'] }}
-        </td>
-        <td>
-            {{ i['serial'] }}
-        </td>
-        <td>
-            {{ i['summary'] }}
-        </td>
-        <td>
-            ${{ i['price'] }}
-        </td>
-        <td class="d-flex">
-            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" name="deletethis" value="{{ i['serial'] }}">
-        </td>
-    </tr>
-    {% endfor %}
-    </table>
+        <table class="table table-dark table-borderless table-responsive table-sm">
+            <tr>
+                <th class="text-muted">
+                    edit
+                </th>
+                <th>
+                    name
+                </th>
+                <th>
+                    serial
+                </th>
+                <th>
+                    about
+                </th>
+                <th>
+                    price
+                </th>
+                <th>
+                    <a href="#" id="selectall" name="selectall" autocomplete="off" checked onclick="eventCheckBox()">
+                        <i class="bi bi-check2-all"></i>
+                    </a>
+                </th>
+            </tr>
+            {% for i in rows %}
+            <tr>
+                <td>
 
-    <div class="mx-auto w-auto float-start row text-light">
-        <div class="col float-end">
-            <button formaction="/inv" id="delete" type="submit" class="btn btn-xs"><i class="bi bi-trash text-danger fs-2"></i></button>
+                    <button id="editguitar" type="submit" class="btn btn-xs" name="edit" value="{{ i['serial'] }}"
+                        formaction="/edit">
+                        <i class="bi bi-pencil text-info"></i>
+                    </button>
+
+                </td>
+                <td>
+                    {{ i['name'] }}
+                </td>
+                <td>
+                    {{ i['serial'] }}
+                </td>
+                <td>
+                    {{ i['summary'] }}
+                </td>
+                <td>
+                    ${{ i['price'] }}
+                </td>
+                <td class="d-flex">
+                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" name="deletethis"
+                        value="{{ i['serial'] }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="mx-auto w-auto float-start row text-light">
+            <div class="col float-end">
+                <button formaction="/inv" id="delete" type="submit" class="btn btn-xs"><i
+                        class="bi bi-trash text-danger fs-2"></i></button>
+            </div>
         </div>
-    </div>
-  </div> 
+</div>
 </form>
 {% endblock %}

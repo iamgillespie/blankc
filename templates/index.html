@@ -5,161 +5,175 @@
 {% block main %}
 
 
-        <!-- Masthead-->
-        <header class="masthead" style='background-image: url("{{ img }}");' id="masthead">
-          <div class="container px-4 px-lg-5 h-100">
-              
-              {% for message in get_flashed_messages() %}
-              <div class="alert alert-info alert-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-              {% endfor %}                
+<!-- Masthead-->
+<header class="masthead" style='background-image: url("{{ img }}");' id="masthead">
+    <div class="container px-4 px-lg-5 h-100">
 
-
-              <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                  <div class="col-lg-8 align-self-end">
-                      <h1 class="text-white font-weight-light text-center" id="blankcheader">BLANKC</h1>
-                  </div>
-                  <div class="col-lg-8 align-self-baseline">
-                      <a class="btn btn-dark btn-xl w-auto" href="#about">About</a>
-                  </div>
-
-              </div>
-          </div>
-      </header>
-
-
-      <!-- About-->
-      <section class="page-section" id="about">
-          <div class="container px-lg-5 h-100">
-              <div class="row gx-4 gx-lg-5 h-100 d-flex align-items-center justify-content-center">
-                  <div class="col-lg-8 text-center">
-                      <h1 class="text-white mt-0">About</h1>
-                      <hr class="divider-light w-25 mx-auto" />
-                      <p class="text-white-75 about-blankc">{{ about }}</p>
-                      <a class="btn btn-light btn-xl w-auto" href="#gallery">View gallery</a>
-                  </div>
-              </div>
-          </div>
-      </section>
-
-      <!-- Gallery -->
-
-      <div id="gallery" class="bg-dark">
-          <div class="container-fluid p-0">
-              <div class="row g-0 w-100 justify-content-evenly text-center">            
-<div id="carouselcontrols" class="carousel slide carousel-fade" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    {% for i in gallery %}
-    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
-      
-      <img src="{{ i['photo'] }}" class="d-block w-100 gallery" alt="gallery">
-      <div class="carousel-caption text-break centered w-100 py-5">
-
-        <div class="centered" style="width: 75vw;">
-        <h1 class="display-6">{{ i['name']|upper }}</h1>
-        <hr class="divider-light w-25 mx-auto" />
-        <p class="text-sm-center">{{ i['summary'] }}</p>
-        <p>${{ i['price'] }}</p>
-        <form id="lookup" action="/details" method="POST" enctype="multipart/form-data">
-        <input hidden id="lookup" name="lookup" type="text" value="{{ i['serial'] }}" />
-        <button class="btn btn-xl btn-outline-light w-auto" id="submitButton" type="submit">More details...</button>  
-      </form>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% endfor %}
 
-      </div>
+
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end">
+                <h1 class="text-white font-weight-light text-center" id="blankcheader">BLANKC</h1>
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <a class="btn btn-dark btn-xl w-auto" href="#about">About</a>
+            </div>
+
+        </div>
     </div>
+</header>
 
-    {% endfor %}
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselcontrols" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselcontrols" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
 
-                    
-</div>
-</div>
+<!-- About-->
+<section class="page-section" id="about">
+    <div class="container px-lg-5 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 d-flex align-items-center justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="text-white mt-0">About</h1>
+                <hr class="divider-light w-25 mx-auto" />
+                <p class="text-white-75 about-blankc">{{ about }}</p>
+                <a class="btn btn-light btn-xl w-auto" href="#gallery">View gallery</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+
+<div id="gallery" class="bg-dark">
+    <div class="container-fluid p-0">
+        <div class="row g-0 w-100 justify-content-evenly text-center">
+            <div id="carouselcontrols" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for i in gallery %}
+                    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+
+                        <img src="{{ i['photo'] }}" class="d-block w-100 gallery" alt="gallery">
+                        <div class="carousel-caption text-break centered w-100 py-5">
+
+                            <div class="centered" style="width: 75vw;">
+                                <h1 class="display-6">{{ i['name']|upper }}</h1>
+                                <hr class="divider-light w-25 mx-auto" />
+                                <p class="text-sm-center">{{ i['summary'] }}</p>
+                                <p>${{ i['price'] }}</p>
+                                <form id="lookup" action="/details" method="POST" enctype="multipart/form-data">
+                                    <input hidden id="lookup" name="lookup" type="text" value="{{ i['serial'] }}" />
+                                    <button class="btn btn-xl btn-outline-light w-auto" id="submitButton"
+                                        type="submit">More details...</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselcontrols"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselcontrols"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+
+        </div>
+    </div>
 </div>
 
 <!-- Contact-->
 <section class="page-section bg-light" id="contact" p-5>
-<div class="container px-4 px-lg-5" id="contact-spacing">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-lg-8 col-xl-6 text-center">
-            <h2 class="mt-0">Contact</h2>
-            <hr class="divider" />
-            <p class="text-muted mb-5">Like something you saw? Want a custom build?  Please drop a message and get in touch!</p>
+    <div class="container px-4 px-lg-5" id="contact-spacing">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Contact</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-5">Like something you saw? Want a custom build? Please drop a message and get in
+                    touch!</p>
+            </div>
         </div>
-    </div>
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-lg-6">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-6">
 
-            <form id="contactForm" action="/index" method="POST" enctype="multipart/form-data">
-                <!-- Name input-->
-                <div class="form-floating mb-3">
-                    <input required class="form-control" id="name" name="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                    <label for="name">Name</label>
-                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                </div>
-                <!-- Email address input-->
-                <div class="form-floating mb-3">
-                    <input required class="form-control" id="email" name="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                    <label for="email">Email</label>
-                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                </div>
-                <!-- Phone number input-->
-                <div class="form-floating mb-3">
-                    <input class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Phone number is not required" id="phone" name="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                    <label for="phone">Phone <span style="opacity: .2;">(optional)</span></label>
-                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                </div>
-                <!-- Message input-->
-                <div class="form-floating mb-3">
-                    <textarea required class="form-control" id="message" name="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                    <label for="message">Message</label>
-                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                </div>
-                <!-- Submit success message-->
-                <div class="d-none" id="submitSuccessMessage">
-                    <div class="text-center mb-3">
-                        <div class="fw-bolder">{{ message }}</div>
+                <form id="contactForm" action="/index" method="POST" enctype="multipart/form-data">
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        <input required class="form-control" id="name" name="name" type="text"
+                            placeholder="Enter your name..." data-sb-validations="required" />
+                        <label for="name">Name</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                     </div>
-                </div>
-                <!-- Submit error message-->
-                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                <!-- Submit Button-->
-                <div class="d-grid"><button class="btn btn-xl btn btn-primary w-auto mx-auto" id="submitButton" type="submit">Submit</button></div>
-            </form>
+                    <!-- Email address input-->
+                    <div class="form-floating mb-3">
+                        <input required class="form-control" id="email" name="email" type="email"
+                            placeholder="name@example.com" data-sb-validations="required,email" />
+                        <label for="email">Email</label>
+                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                    </div>
+                    <!-- Phone number input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Phone number is not required" id="phone" name="phone" type="tel"
+                            placeholder="(123) 456-7890" data-sb-validations="required" />
+                        <label for="phone">Phone <span style="opacity: .2;">(optional)</span></label>
+                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.
+                        </div>
+                    </div>
+                    <!-- Message input-->
+                    <div class="form-floating mb-3">
+                        <textarea required class="form-control" id="message" name="message" type="text"
+                            placeholder="Enter your message here..." style="height: 10rem"
+                            data-sb-validations="required"></textarea>
+                        <label for="message">Message</label>
+                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                    </div>
+                    <!-- Submit success message-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3">
+                            <div class="fw-bolder">{{ message }}</div>
+                        </div>
+                    </div>
+                    <!-- Submit error message-->
+                    <div class="d-none" id="submitErrorMessage">
+                        <div class="text-center text-danger mb-3">Error sending message!</div>
+                    </div>
+                    <!-- Submit Button-->
+                    <div class="d-grid"><button class="btn btn-xl btn btn-primary w-auto mx-auto" id="submitButton"
+                            type="submit">Submit</button></div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </section>
 
-<!-- Footer--> 
+<!-- Footer-->
 <footer class="bg-dark absolute-bottom">
-    
-        <div class="p-1 w-100 d-flex justify-content-around">
-            <a href="https://www.facebook.com/Blankc-Guitars-116126977740323/" target="_blankc">
-          <i class="bi-facebook fs-3 text-muted"></i>
-            </a>
-            <a href="http://m.me/Blankc-Guitars" target="_blank">
-          <i class="bi-messenger fs-3 text-muted"></i>
-            </a>
-            <a href="https://www.instagram.com/blankc_guitars/" target="_blank">
-          <i class="bi-instagram fs-3 text-muted"></i>
-            </a>
-            <a href="mailto:spencerwhite620@gmail.com">
-          <i class="bi-envelope fs-3 text-muted"></i>
+
+    <div class="p-1 w-100 d-flex justify-content-around">
+        <a href="https://www.facebook.com/Blankc-Guitars-116126977740323/" target="_blankc">
+            <i class="bi-facebook fs-3 text-muted"></i>
         </a>
-        </div>
-    
-    </footer>
+        <a href="http://m.me/116126977740323" target="_blank">
+            <i class="bi-messenger fs-3 text-muted"></i>
+        </a>
+        <a href="https://www.instagram.com/blankc_guitars/" target="_blank">
+            <i class="bi-instagram fs-3 text-muted"></i>
+        </a>
+        <a href="mailto:spencerwhite620@gmail.com">
+            <i class="bi-envelope fs-3 text-muted"></i>
+        </a>
+    </div>
+
+</footer>
 {% endblock %}

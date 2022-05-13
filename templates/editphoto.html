@@ -6,92 +6,95 @@
 <div class="pb-5">
 
     <!--select cover photo-->
-        <div class="container w-100">
-            <div class="row">
-                <div class="col-lg-4 col-lg-12 mb-4 text-light"> 
-                    <div class="justify-content-center mt-5 p-3 text-center">
+    <div class="container w-100">
+        <div class="row">
+            <div class="col-lg-4 col-lg-12 mb-4 text-light">
+                <div class="justify-content-center mt-5 p-3 text-center">
                     <h1 class="display-5">Cover photo</h1>
                     <p class="text-muted">This image will be prioritized to represent the guitar.</p>
                     <form id="edit" action="/updatecover" method="POST" enctype="multipart/form-data">
-                    {% for i in gallery %}
-                    <input hidden name="serial" value="{{ i['serial'] }}">
-                    <input hidden class="form-check-input" type="radio" name="cover" value="{{ i['photo'] }}" id="{{ i['photo'] }}">
-                    <label id="radioimg" class="form-check-label" for="{{ i['photo'] }}">
-                    <img id="radioimg" class="img-responsive p-0" src="{{ i['photo'] }}" alt="{{ i['name'] }}" style="width: 25vw;">
-                    </label>
-                    {% endfor %}
-                    </div>
-                    </div>
-                    <div class="d-grid w-25 mx-auto text-center">                            
-                    <button class="btn btn-warning btn-xl" name="photoedit" type="submit">Update cover</button>                            
-                    
-                </form>
+                        {% for i in gallery %}
+                        <input hidden name="serial" value="{{ i['serial'] }}">
+                        <input hidden class="form-check-input" type="radio" name="cover" value="{{ i['photo'] }}"
+                            id="{{ i['photo'] }}">
+                        <label id="radioimg" class="form-check-label" for="{{ i['photo'] }}">
+                            <img id="radioimg" class="img-responsive p-0" src="{{ i['photo'] }}" alt="{{ i['name'] }}"
+                                style="width: 25vw;">
+                        </label>
+                        {% endfor %}
                 </div>
             </div>
-        </div>
+            <div class="d-grid w-25 mx-auto text-center">
+                <button class="btn btn-warning btn-xl" name="photoedit" type="submit">Update cover</button>
 
-        <!--delete photos-->
-        <div class="container w-100">
-            <div class="row">
-                <div class="col-lg-4 col-lg-12 mb-4 text-light"> 
-                    <div class="justify-content-center mt-5 p-3 text-center">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--delete photos-->
+    <div class="container w-100">
+        <div class="row">
+            <div class="col-lg-4 col-lg-12 mb-4 text-light">
+                <div class="justify-content-center mt-5 p-3 text-center">
                     <h1 class="display-5">Delete photos</h1>
                     <p class="text-danger">Images selected here will be deleted.</p>
                     <form id="edit" action="/delpic" method="POST" enctype="multipart/form-data">
-                    {% for i in gallery %}
-                    <input hidden name="serial" value="{{ i['serial'] }}">
-                    <input hidden class="form-check-input" type="checkbox" name="cover" value="{{ i['photo'] }}" id="check{{ i['photo'] }}">
-                    <label id="checkimg" class="form-check-label" for="check{{ i['photo'] }}">
-                    <img id="checkimg" class="img-responsive p-0" src="{{ i['photo'] }}" alt="{{ i['name'] }}" style="width: 25vw;">
-                    </label>
-                    {% endfor %}
-                    </div>
-                    </div>
-                    <div class="d-grid w-25 mx-auto text-center">                            
-                    <button class="btn btn-danger btn-xl w-auto" type="submit">Delete</button>                            
-                    
-                </form>
+                        {% for i in gallery %}
+                        <input hidden name="serial" value="{{ i['serial'] }}">
+                        <input hidden class="form-check-input" type="checkbox" name="cover" value="{{ i['photo'] }}"
+                            id="check{{ i['photo'] }}">
+                        <label id="checkimg" class="form-check-label" for="check{{ i['photo'] }}">
+                            <img id="checkimg" class="img-responsive p-0" src="{{ i['photo'] }}" alt="{{ i['name'] }}"
+                                style="width: 25vw;">
+                        </label>
+                        {% endfor %}
                 </div>
             </div>
-        </div>
+            <div class="d-grid w-25 mx-auto text-center">
+                <button class="btn btn-danger btn-xl w-auto" type="submit">Delete</button>
 
-                <!-- Add photos -->
-                <div class="col-lg-6 mx-auto mt-5">
-                    <h3 class="text-light text-center">Add photos</h3>
-                <form id="addpic" action="/addpic" method="POST" enctype="multipart/form-data">
-                    
-                    <!-- Photo input-->
-                    {% for i in gallery %}
-                    <input hidden name="serial" value="{{ i['serial'] }}">
-                    <input hidden name="name" value="{{ i['name'] }}">
-                    {% endfor %}
-                    <div class="form-floating mb-3">
-                        <div id="picuploads"><i class="bi bi-camera" id="camera"></i></div>
-                        <input required class="form-control opacity-0" id="photo" name='photo' type="file" accept="image/*" multiple placeholder="upload photos" />
-                        <div id="frames" class="d-flex justify-content-evenly p-2 align-middle"></div>
-                    </div>
-                    
-                    <div class="d-grid w-25 mx-auto text-center">                            
-                        <button class="btn btn-success btn-xl w-auto" type="submit">Upload</button>                            
-                        
-                    
-                    </div>
-                 
                 </form>
-                
             </div>
-
-        <a class="w-auto text-light" id="goback" href="/inv"><i class="bi bi-x-lg fs-1"></i></a>
+        </div>
     </div>
 
-    <script>
-        $(document).ready(function(){
-            $('#photo').change(function(){
-                $("#frames").html('');
-                for (var i = 0; i < $(this)[0].files.length; i++) {
-                    $("#frames").append('<img src="'+window.URL.createObjectURL(this.files[i])+'" class="img-fluid rounded mx-auto p-1" id="previewpic" />');
-                }
-            });
+    <!-- Add photos -->
+    <div class="col-lg-6 mx-auto mt-5">
+        <h3 class="text-light text-center">Add photos</h3>
+        <form id="addpic" action="/addpic" method="POST" enctype="multipart/form-data">
+
+            <!-- Photo input-->
+            {% for i in gallery %}
+            <input hidden name="serial" value="{{ i['serial'] }}">
+            <input hidden name="name" value="{{ i['name'] }}">
+            {% endfor %}
+            <div class="form-floating mb-3">
+                <div id="picuploads"><i class="bi bi-camera" id="camera"></i></div>
+                <input required class="form-control opacity-0" id="photo" name='photo' type="file" accept="image/*"
+                    multiple placeholder="upload photos" />
+                <div id="frames" class="d-flex justify-content-evenly p-2 align-middle"></div>
+            </div>
+
+            <div class="d-grid w-25 mx-auto text-center">
+                <button class="btn btn-success btn-xl w-auto" type="submit">Upload</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <a class="w-auto text-light" id="goback" href="/inv"><i class="bi bi-x-lg fs-1"></i></a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#photo').change(function () {
+            $("#frames").html('');
+            for (var i = 0; i < $(this)[0].files.length; i++) {
+                $("#frames").append('<img src="' + window.URL.createObjectURL(this.files[i]) + '" class="img-fluid rounded mx-auto p-1" id="previewpic" />');
+            }
         });
-        </script>
+    });
+</script>
 {% endblock %}

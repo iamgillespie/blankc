@@ -6,87 +6,88 @@
 {% block main %}
 
 <div class="row gx-4 gx-lg-5 justify-content-center mb-5 container-fluid">
-    <div class="col-lg-6" id="floatform">
-      {% for i in edit %}
+  <div class="col-lg-6" id="floatform">
+    {% for i in edit %}
     <form id="modify" action="/modify" method="POST" enctype="multipart/form-data">
-        
-        <div class="form-floating mb-3">
-            <h4 class="text-light text-center">Account settings</h4>
-        </div>
 
-        <!-- User name input-->
-        <div class="form-floating mb-3">
-            <input class="form-control text-dark" id="name" name="name" type="text" value="{{ i['name'] }}">
-            <label for="name">Change name</label>
-        </div>
-        <!-- email input-->
-        <div class="form-floating mb-3">
-            <input class="form-control" hidden required id="email" name="email" type="text" value="{{ i['email'] }}">
-            <input class="form-control" disabled requiredtype="text" value="{{ i['email'] }}">
-            <label for="email">Email</label>
-        </div>
-        <!-- Password input-->
-        <div class="form-floating mb-3">
-            <input class="form-control" id="password" name="password" type="password" placeholder="password" value="">
-            <label for="name">Change password</label>
-        </div>
-        <!-- Confirm password input-->
-        <div class="form-floating mb-3">
-            <input class="form-control" id="confirm" name="confirm" type="password" placeholder="confirm" value="">
-            <label for="name">Confirm new password</label>
-        </div>
-        <!-- status input-->
-        <div class="form-floating mb-3">
-            <label for="status">Status</label>
-            <select class="form-control text-center" name="status" id="status">
-              <option class="form-control text-danger" value="{{ i['status' ]}}">{{ i['status' ]}}</option>
-              <option class="form-control text-danger" value="{{ toggle }}">{{ toggle }}</option>
-            </select>
-        </div>
+      <div class="form-floating mb-3">
+        <h4 class="text-light text-center">Account settings</h4>
+      </div>
 
-        <!-- Submit Button-->
-        <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton" type="submit">Submit</button></div>
-    
-</form>
+      <!-- User name input-->
+      <div class="form-floating mb-3">
+        <input class="form-control text-dark" id="name" name="name" type="text" value="{{ i['name'] }}">
+        <label for="name">Change name</label>
+      </div>
+      <!-- email input-->
+      <div class="form-floating mb-3">
+        <input class="form-control" hidden required id="email" name="email" type="text" value="{{ i['email'] }}">
+        <input class="form-control" disabled requiredtype="text" value="{{ i['email'] }}">
+        <label for="email">Email</label>
+      </div>
+      <!-- Password input-->
+      <div class="form-floating mb-3">
+        <input class="form-control" id="password" name="password" type="password" placeholder="password" value="">
+        <label for="name">Change password</label>
+      </div>
+      <!-- Confirm password input-->
+      <div class="form-floating mb-3">
+        <input class="form-control" id="confirm" name="confirm" type="password" placeholder="confirm" value="">
+        <label for="name">Confirm new password</label>
+      </div>
+      <!-- status input-->
+      <div class="form-floating mb-3">
+        <label for="status">Status</label>
+        <select class="form-control text-center" name="status" id="status">
+          <option class="form-control text-danger" value="{{ i['status' ]}}">{{ i['status' ]}}</option>
+          <option class="form-control text-danger" value="{{ toggle }}">{{ toggle }}</option>
+        </select>
+      </div>
 
-</div>
+      <!-- Submit Button-->
+      <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton"
+          type="submit">Submit</button></div>
+
+    </form>
+
+  </div>
 
 
 
-<div id="msgDiv"></div>
+  <div id="msgDiv"></div>
 
-<div class="col-lg-6">
-<form id="delusr" action="/delusr" method="POST" enctype="multipart/form-data">
-  <div class="form-check" id='removeaccount'>
-  <input hidden value="{{ i['email'] }}" name="email">
-  <input class="form-check-input" type="checkbox" name="remove" value="{{ i['email'] }}" id="msgTrigger">
-  
-    <label class="form-check-label" for="msgTrigger">
-    <button id="yousure" class="btn btn-sm p-0 text-danger" type="submit">remove account</button>
-    </label>
-</div>
-</form>
-</div>
+  <div class="col-lg-6">
+    <form id="delusr" action="/delusr" method="POST" enctype="multipart/form-data">
+      <div class="form-check" id='removeaccount'>
+        <input hidden value="{{ i['email'] }}" name="email">
+        <input class="form-check-input" type="checkbox" name="remove" value="{{ i['email'] }}" id="msgTrigger">
+
+        <label class="form-check-label" for="msgTrigger">
+          <button id="yousure" class="btn btn-sm p-0 text-danger" type="submit">remove account</button>
+        </label>
+      </div>
+    </form>
+  </div>
 </div>
 {% endfor %}
 
 
 <script>
-var alertPlaceholder = document.getElementById('msgDiv')
-var alertTrigger = document.getElementById('msgTrigger')
+  var alertPlaceholder = document.getElementById('msgDiv')
+  var alertTrigger = document.getElementById('msgTrigger')
 
-function alert(message, type) {
-  var wrapper = document.createElement('div')
-  wrapper.innerHTML = '<div class="alert alert-danger alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+  function alert(message, type) {
+    var wrapper = document.createElement('div')
+    wrapper.innerHTML = '<div class="alert alert-danger alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
 
-  alertPlaceholder.append(wrapper)
-}
+    alertPlaceholder.append(wrapper)
+  }
 
-if (alertTrigger) {
-  alertTrigger.addEventListener('click', function () {
-    alert('Leaving this button checked will permanently delete the account once you select submit! Please make sure you intend to delete the account before submitting.')
-  })
-}
+  if (alertTrigger) {
+    alertTrigger.addEventListener('click', function () {
+      alert('Leaving this button checked will permanently delete the account once you select submit! Please make sure you intend to delete the account before submitting.')
+    })
+  }
 </script>
 
 {% endblock %}

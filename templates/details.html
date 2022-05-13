@@ -4,37 +4,35 @@
 {% endblock %}
 {% block main %}
 
-      <!-- Display details -->
-      <section class="page-section" id="details">
-        <div class="container h-100 w-100">
-            <div class="row h-100">
-                
-                <div class="col-lg-4 col-lg-12 mb-4 text-light">
+<!-- Display details -->
+<section class="page-section" id="details">
+    <div class="container h-100 w-100">
+        <div class="row h-100">
 
-                    {% for j in info %}
-                    <div class="p-5">
+            <div class="col-lg-4 col-lg-12 mb-4 text-light">
+
+                {% for j in info %}
+                <div class="p-5">
                     <h1 class="display-6 text-center">{{ j['name']|upper }}</h1>
                     <p class="text-sm">{{ j['about'] }}</p>
                     <p class="text-sm">${{ j['price'] }}</p>
                     <p class="text-sm">Serial# {{ j['serial'] }}</p>
                     {% endfor %}
                     <p class="text-center"><a href="/#contact">Contact for purchase</a></p>
-                    
-                      
+
                     {% for i in gallery %}
                     <a href="{{ i['photo'] }}" target="_blank">
-                    <img src="{{ i['photo'] }}" class="img-fluid mb-4 polaroid" alt="{{ i['name'] }}">
+                        <img src="{{ i['photo'] }}" class="img-fluid mb-4 polaroid" alt="{{ i['name'] }}">
                     </a>
                     {% endfor %}
                     <p class="text-center"><a href="/#contact">Contact for purchase</a></p>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-
-
-        <a class="w-auto text-light" id="goback" href="javascript:javascript:history.go(-1)"><i class="bi bi-x-lg fs-1"></i></a>
-    </section>
+    <a class="w-auto text-light" id="goback" href="javascript:javascript:history.go(-1)"><i
+            class="bi bi-x-lg fs-1"></i></a>
+</section>
 
 {% endblock %}

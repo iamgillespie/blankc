@@ -5,55 +5,57 @@
 {% block main %}
 
 <script>
-    function eventCheckBox() {
-  let checkboxs = document.getElementsByTagName("input");
-  for(let i = 0; i < checkboxs.length ; i++) { //zero-based array
-    checkboxs[i].checked = !checkboxs[i].checked;
+  function eventCheckBox() {
+    let checkboxs = document.getElementsByTagName("input");
+    for (let i = 0; i < checkboxs.length; i++) { //zero-based array
+      checkboxs[i].checked = !checkboxs[i].checked;
+    }
   }
-}
 </script>
 
-    <form class="form-control border-0 bg-dark" id="del" action="/msg" method="POST" enctype="multipart/form-data">
-    <table class="table table-dark table-borderless table-responsive table-sm table-hover px-3">
-    <tr> 
+<form class="form-control border-0 bg-dark" id="del" action="/msg" method="POST" enctype="multipart/form-data">
+  <table class="table table-dark table-borderless table-responsive table-sm table-hover px-3">
+    <tr>
       <th style="width: 3vw;">
         <a href="#" id="selectall" name="selectall" autocomplete="off" checked onclick="eventCheckBox()">
-            <i class="bi bi-check2-all"></i>
+          <i class="bi bi-check2-all"></i>
         </a>
-      </th>      
+      </th>
       <th class="text-center" style="width: 10vw;">
         Date
       </th>
       <th class="text-center" style="width: 80vw;">
         Message
-    </th>
+      </th>
     </tr>
     {% for i in msgs %}
     <tr class="py-4">
 
-        <td class="py-4 d-flex">
-            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" name="{{ i['msgid'] }}" value="{{ i['msgid'] }}" aria-label="...">
-        </td>
-        <td  class="py-4 text-center text-muted">
+      <td class="py-4 d-flex">
+        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" name="{{ i['msgid'] }}"
+          value="{{ i['msgid'] }}" aria-label="...">
+      </td>
+      <td class="py-4 text-center text-muted">
         {{ i['date'] }}
-        </td>
-        <td class="px-3">
-          <p class="py-5">{{ i['message'] }}</p>
-          <div class="text-end text-muted" style="padding-right: 20%;">
+      </td>
+      <td class="px-3">
+        <p class="py-5">{{ i['message'] }}</p>
+        <div class="text-end text-muted" style="padding-right: 20%;">
           <p>From: {{ i['name'] }}
-          <br>{{ i['email'] }}
-          <br>{{ i['phone'] }}</p>              
-          </div>
-         
-        </td>
+            <br>{{ i['email'] }}
+            <br>{{ i['phone'] }}
+          </p>
+        </div>
+
+      </td>
 
     </tr>
     {% endfor %}
-    </table>
-      <div id="msgdel">
-        <button id="submitButton" type="submit" class="btn"><i class="bi bi-trash text-danger fs-2"></i></button>
-      </div>
-    </form>
- 
+  </table>
+  <div id="msgdel">
+    <button id="submitButton" type="submit" class="btn"><i class="bi bi-trash text-danger fs-2"></i></button>
+  </div>
+</form>
+
 
 {% endblock %}

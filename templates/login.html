@@ -7,31 +7,34 @@
 
 <div class="row gx-4 gx-lg-5 justify-content-center mb-5 container-fluid">
     <div class="col-lg-6" id="floatform">
-    <form id="login" action="/login" method="POST" enctype="multipart/form-data">
-        <div class="form-floating mb-3">
-            <h4 class="text-light text-center">Login</h4>
-        </div>        
+        <form id="login" action="/login" method="POST" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <h4 class="text-light text-center">Login</h4>
+            </div>
 
-        <!-- email input-->
-        <div class="form-floating mb-3">
-            <input class="form-control" hidden required id="crumb" name="crumb" type="text" value="{{ crumb }}">
-            <input class="form-control" required id="email" name="email" type="email" placeholder="name@example.com" data-sb-validations="required" />
-            <label for="name">Email</label>
-            <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>
-        </div>
-        <!-- Password input-->
-        <div class="form-floating mb-3">
-            <input class="form-control" required id="password" name="password" type="password" placeholder="password" data-sb-validations="required" />
-            <label for="name">Password</label>
-            <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
-        </div>
+            <!-- email input-->
+            <div class="form-floating mb-3">
+                <input class="form-control" hidden required id="crumb" name="crumb" type="text" value="{{ crumb }}">
+                <input class="form-control" required id="email" name="email" type="email" placeholder="name@example.com"
+                    data-sb-validations="required" />
+                <label for="name">Email</label>
+                <div class="invalid-feedback" data-sb-feedback="name:required">An email is required.</div>
+            </div>
+            <!-- Password input-->
+            <div class="form-floating mb-3">
+                <input class="form-control" required id="password" name="password" type="password"
+                    placeholder="password" data-sb-validations="required" />
+                <label for="name">Password</label>
+                <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
+            </div>
 
-        <!-- Submit Button-->
-        <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton" type="submit">Submit</button></div>
-    </form>
-    
+            <!-- Submit Button-->
+            <div class="d-grid w-25 mx-auto"><button class="btn btn-primary btn-xl w-auto" id="submitButton"
+                    type="submit">Submit</button></div>
+        </form>
+
+    </div>
 </div>
-</div>    
 
 
 {% endblock %}
