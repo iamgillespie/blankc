@@ -394,12 +394,13 @@ def updateguitars():
         about = request.form['about']
         price = request.form['price']
         edit = request.form['edit']
+        video = request.form['video']
 
         con = sql.connect(abpath + '/blankc.db')
         con.row_factory = sql.Row
         cur = con.cursor()
 
-        con.execute('UPDATE guitars SET (name, summary, about, price, serial) = (?, ?, ?, ?, ?) WHERE serial = ?', (name, summary, about, price, serial, edit))
+        con.execute('UPDATE guitars SET (name, summary, about, price, serial, video) = (?, ?, ?, ?, ?, ?) WHERE serial = ?', (name, summary, about, price, serial, video, edit))
         con.commit()
         con.execute('UPDATE photos SET serial = ? WHERE serial = ?', (serial, edit,))
         con.commit()
@@ -441,6 +442,7 @@ def add():
             price = request.form['price']
             about = request.form['about']
             summary = request.form['summary']
+            video = request.form['video']
 
             cur.execute('SELECT serial FROM guitars WHERE serial = ?', (serial,))
             dupe = cur.fetchall()
@@ -452,7 +454,7 @@ def add():
             else:
                 photos = os.listdir(abpath + path)
 
-                con.execute('INSERT INTO guitars (name, serial, price, about, summary) VALUES (?, ?, ?, ?, ?)', (name, serial, price, about, summary))
+                con.execute('INSERT INTO guitars (name, serial, price, about, summary, video) VALUES (?, ?, ?, ?, ?, ?)', (name, serial, price, about, summary, video))
                 con.commit()
 
                 for photo in request.files.getlist('photo'):

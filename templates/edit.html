@@ -20,12 +20,13 @@
                             rows="5">{{ j['about'] }}</textarea></p>
                     <p class="text-sm">$<input class="panel-edit w-auto" id="price" name="price" type="text"
                             value="{{ j['price'] }}"></p>
+                    <p class="text-sm">YouTube link: <textarea class="panel-edit w-100" id="video" name="video" type="text"
+                        rows="2">{{ j['video'] }}</textarea></p>
                     <p class="text-sm">Serial# <input class="panel-edit w-auto" id="serial" name="serial" type="text"
-                            value="{{ j['serial'] }}"></p>
+                        value="{{ j['serial'] }}"></p>
                     {% endfor %}
                     <div class="d-grid w-25 mx-auto">
                         <button class="btn btn-primary btn-xl" type="submit">Update info</button>
-
                 </form>
             </div>
             <div class="justify-content-center mt-5 p-3 text-center">

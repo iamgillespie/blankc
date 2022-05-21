@@ -16,7 +16,7 @@
                     <h1 class="display-6 text-center">{{ j['name']|upper }}</h1>
                     <p class="text-sm">{{ j['about'] }}</p>
                     <p class="text-sm">${{ j['price'] }}</p>
-                    <p class="text-sm">Serial# {{ j['serial'] }}</p>
+                    <p class="text-sm">Serial# {{ j['serial']}}</p>
                     {% endfor %}
                     <p class="text-center"><a href="/#contact">Contact for purchase</a></p>
 
@@ -25,6 +25,17 @@
                         <img src="{{ i['photo'] }}" class="img-fluid mb-4 polaroid" alt="{{ i['name'] }}">
                     </a>
                     {% endfor %}
+                    
+                    {% for i in info %}
+                    {% if i['video'] %}
+                    <div class="w-100 d-flex justify-content-center my-5">
+                    <div id="youtube">
+                        {{ i['video']|safe }}
+                    </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    
                     <p class="text-center"><a href="/#contact">Contact for purchase</a></p>
                 </div>
             </div>
