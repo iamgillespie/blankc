@@ -91,6 +91,15 @@
     </div>
 </div>
 
+<!--IP for spam-filtering-->
+<script>
+    $.getJSON("https://api.ipify.org?format=json", function (data) {
+    
+      $("#ipinfo").val(data.ip);
+    })
+ </script>
+
+
 <!-- Contact-->
 <section class="page-section bg-light" id="contact" p-5>
     <div class="container px-4 px-lg-5" id="contact-spacing">
@@ -110,6 +119,7 @@
                     <div class="form-floating mb-3">
                         <input required class="form-control" id="name" name="name" type="text"
                             placeholder="Enter your name..." data-sb-validations="required" />
+                        <input hidden type="text" id="ipinfo" name="ipinfo">
                         <label for="name">Name</label>
                         <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                     </div>

@@ -6,7 +6,6 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta, date
 from tempfile import mkdtemp
-import time
 
 app = Flask(__name__)
 
@@ -52,16 +51,8 @@ def index():
         phone = request.form['phone']
         message = request.form['message']
         today = date.today()
-        ipinfo = request.form['ipinfo']
 
-        blacklist = ['Henrybaw']
-        
-#       Uncomment once we get Henrybaws ip address.                
-        if name in blacklist or ipinfo.isalpha() == True:
-            time.sleep(3600)
-            return redirect('https://www.youtube.com/watch?v=xm3YgoEiEDc')
-
-        con.execute('INSERT INTO msgs (name, email, phone, message, date, ipaddress) VALUES (?, ?, ?, ?, ?, ?)', (name, email, phone, message, today, ipinfo))
+        con.execute('INSERT INTO msgs (name, email, phone, message, date) VALUES (?, ?, ?, ?, ?)', (name, email, phone, message, today))
         con.commit()
 
         flash('Message has been sent!')
@@ -114,6 +105,7 @@ def msg():
 
             for i in deletethis:
                 delete = i
+                print(delete)
 
                 con.execute("DELETE FROM msgs WHERE msgid = ?", (delete,))
                 con.commit()
@@ -222,6 +214,7 @@ def login():
                 else:
 
                     session['user'] = email
+                    print(crumb)
                     return redirect(crumb)
 
         return redirect('/panel')
@@ -359,6 +352,23 @@ def delpic():
             delete = i
             cur.execute("""DELETE FROM photos WHERE photo = ? AND "primary" = "no" """, (delete,))
             con.commit()
+
+### Loop that will delete records with select all
+#
+#        if request.method == "POST":
+#            deletethis = request.form
+#
+#            for i in deletethis:
+#                delete = i
+#                cur.execute('SELECT photo FROM photos WHERE serial = ?', (delete,))
+#                # query pulls up the path of the photo from the photo column for deletion in loop.
+#                for j in cur.fetchall():
+#                    os.remove(abpath + j[0])
+#
+#                con.execute("DELETE FROM guitars WHERE serial = ?", (delete,))
+#                con.commit()
+#                con.execute("DELETE FROM photos WHERE serial = ?", (delete,))
+#                con.commit()
 
         #TODO remove the files...
 
