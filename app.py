@@ -59,7 +59,7 @@ def index():
 #       Uncomment once we get Henrybaws ip address.                
         if name in blacklist or ipinfo.isalpha() == True:
             time.sleep(3600)
-            return redirect('https://www.youtube.com/watch?v=xm3YgoEiEDc')
+            return redirect('http://127.0.0.1:8080/')
 
         con.execute('INSERT INTO msgs (name, email, phone, message, date, ipaddress) VALUES (?, ?, ?, ?, ?, ?)', (name, email, phone, message, today, ipinfo))
         con.commit()
