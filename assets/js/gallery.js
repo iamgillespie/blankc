@@ -8,7 +8,7 @@ let itemsPerPage = '5';
 // Contact Information
 const CONTACT_INFO = {
     email: 'spencerwhite620@gmail.com',
-    messenger: 'http://m.me/116126977740323',
+    messenger: 'http://m.me/blankc_guitars',
     instagram: 'https://ig.me/m/blankc_guitars'
 };
 
@@ -141,13 +141,14 @@ function renderGalleryPage() {
 }
 
 /**
- * Creates a single responsive item card element.
+ * Creates a single responsive item card element and attaches event listeners.
  * @param {object} item - The inventory item object.
  * @returns {HTMLElement} The created card element.
  */
 function createItemCard(item) {
     const card = document.createElement('div');
-    card.className = 'bg-white shadow-xl overflow-hidden transform hover:scale-[1.02] transition duration-300 flex justify-evenlyborder border-gray-100 h-full flex flex-col rounded-lg';
+    // NOTE: Added 'js-item-card' class and data-serial for easy listener selection
+    card.className = 'bg-white shadow-xl overflow-hidden transform hover:scale-[1.02] transition duration-300 flex justify-evenlyborder border-gray-100 h-full flex flex-col rounded-lg js-item-card';
     card.setAttribute('data-serial', item.serial);
     
     // Use the first image from the array, or a NO IMAGE placeholder
@@ -161,9 +162,9 @@ function createItemCard(item) {
     // Encode the email subject for the item inquiry
     const emailSubject = `Inquiry about item ${item.itemHeader} (S/N: ${item.serial})`;
 
-    // Use the global openModal function, which is now defined in index.html's scope
+    // Removed the complex inline onclick attribute.
     card.innerHTML = `
-        <div class="relative h-48 cursor-pointer" onclick="openModal(inventoryData.find(d => d.serial === '${item.serial}'))">
+        <div class="relative h-48 cursor-pointer js-view-details-trigger">
             <img src="${imageUrl}" alt="${item.itemHeader}" 
                  class="w-full h-full object-cover" 
                  onerror="this.onerror=null; this.src='https://placehold.co/1200x800/f5f5f5/cccccc?text=NO+IMAGE';">
@@ -178,28 +179,22 @@ function createItemCard(item) {
             <p class="text-sm text-gray-600 line-clamp-2 mb-4">${item.shortDescription}</p>
             
             <div class="flex flex-col space-y-3 mt-auto">
-                <!-- View Details Button -->
-                <button class="w-full py-2 bg-blue-500 text-white font-medium hover:bg-blue-600 transition duration-150 mb-2 rounded-lg"
-                        onclick="openModal(inventoryData.find(d => d.serial === '${item.serial}'))">
+                <button class="w-full py-2 bg-blue-500 text-white font-medium hover:bg-blue-600 transition duration-150 mb-2 rounded-lg js-view-details-trigger">
                     View Details
                 </button>
                 
-                <!-- Contact Icons -->
-                <label class="text-xs font-medium text-gray-500">Contact to Purchase:</label>
+                <label class="text-xs font-medium text-gray-500 text-center">Contact to Purchase <i class="fa fa-arrow-down"></i></label>
                 <div class="flex justify-between space-x-2">
-                    <!-- Email -->
                     <a href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}" 
                        class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-red-500 hover:text-white transition duration-150 rounded-lg" 
                        title="Contact via Email">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <!-- Messenger -->
                     <a href="${CONTACT_INFO.messenger}" target="_blank"
                        class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 rounded-lg" 
                        title="Contact via Messenger">
                         <i class="fab fa-facebook-messenger"></i>
                     </a>
-                    <!-- Instagram -->
                     <a href="${CONTACT_INFO.instagram}" target="_blank"
                        class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-pink-500 hover:text-white transition duration-150 rounded-lg" 
                        title="Contact via Instagram">
@@ -209,6 +204,15 @@ function createItemCard(item) {
             </div>
         </div>
     `;
+
+    // Step 2: Add the event listener to both elements with the 'js-view-details-trigger' class
+    card.querySelectorAll('.js-view-details-trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            // Find the item directly using the item object we already have in scope
+            openModal(item);
+        });
+    });
+
     return card;
 }
 
