@@ -1,0 +1,39 @@
+<div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-extrabold text-gray-900 mb-6">Search Inventory</h2>
+    <!-- Gallery Controls (Search only) -->
+    <div class="bg-white p-6 shadow-lg mb-8 flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+        
+        <!-- Search Input -->
+        <input type="text" id="searchInput" placeholder="Search by title, serial, or keywords..."
+               class="flex-grow p-3 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150">
+        
+        <!-- Items Per Page Dropdown -->
+        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+            <span>Show:</span>
+            <select id="itemsPerPageSelect" class="p-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="all">All</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Inventory Gallery -->
+    <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <!-- Item cards will be rendered here -->
+        <div id="loadingIndicator" class="col-span-full text-center p-10 text-gray-500">
+            Loading inventory data from **inventory_data.json**...
+        </div>
+        <div id="noResults" class="col-span-full text-center p-10 text-gray-500 hidden">
+            No items found matching your criteria.
+        </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div id="paginationControls" class="mt-10 p-4 bg-white shadow-lg flex justify-center items-center space-x-4 hidden">
+        <button id="prevPageBtn" class="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 transition duration-150 disabled:opacity-50" disabled>Previous</button>
+        <span id="pageInfo" class="text-gray-700 font-medium">Page X of Y</span>
+        <button id="nextPageBtn" class="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 transition duration-150 disabled:opacity-50">Next</button>
+    </div>
+</div>
