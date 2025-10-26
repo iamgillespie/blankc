@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-nav {
-    background-image: url(/assets/data/headerbg.jpg);
+.nav-bg {
+    background-image: url('/assets/imgs/hbg.jpg');
+    background-position: center;
+    background-size: cover; 
+    background-repeat: no-repeat;
+}
+
+.nav-backdrop {
+    background-color: #ffffff78;
 }
 
 body {
