@@ -5,7 +5,14 @@
     background-size: cover; 
     background-repeat: no-repeat;
 }
-
+#body-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+#mainContent {
+    background-color: #ffffffcc;
+}
 .nav-backdrop {
     background-color: #ffffff78;
 }
