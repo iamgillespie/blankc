@@ -55,27 +55,66 @@ function loadInventory() {
             return response.json();
         })
         .then(data => {
-            inventoryData = data;
-            
-            // CRUCIAL: Reverse the data immediately to establish the default"Reverse Loading Order"
-            inventoryData.reverse(); 
+            // CRUCIAL: Reverse the data immediately to establish the default "Reverse Loading Order"
+            data.reverse(); 
 
             // Cleanup and type conversion
-            inventoryData.forEach(item => {
+            data.forEach(item => {
                 // Ensure price is a number
                 item.price = parseFloat(item.price) || 0;
             });
 
+            // --- START MODIFIED LOGIC: FETCH IMAGE FILES ---
+            // Create an array of promises for fetching all image JSON files concurrently
+            const imageFetchPromises = data.map(item => {
+                // MODIFIED: Check if the item has the new imageFileJson property defined
+                if (item.imageFileJson) { 
+                    // MODIFIED: Construct the path to the JSON file inside the 'guitars/' directory
+                    const imageJsonPath = `guitars/${item.imageFileJson}`; 
+                    
+                    return fetch(imageJsonPath)
+                        .then(response => {
+                            if (!response.ok) {
+                                // MODIFIED: Use the new path variable in the error log
+                                console.error(`Failed to load image JSON: ${imageJsonPath}. Status: ${response.status}`);
+                                return []; // Return an empty array on error
+                            }
+                            return response.json();
+                        })
+                        .then(base64ImageArray => {
+                            // Assign the fetched base64 data to the 'imageFiles' property
+                            item.imageFiles = base64ImageArray;
+                            return item; // Resolve the promise with the updated item
+                        })
+                        .catch(error => {
+                            // MODIFIED: Use the new path variable in the error log
+                            console.error(`Error processing image data for ${imageJsonPath}:`, error);
+                            item.imageFiles = [];
+                            return item;
+                        });
+                } else {
+                    item.imageFiles = []; // No image path, default to empty array
+                    return Promise.resolve(item);
+                }
+            });
+
+            // Wait for all image data fetches to complete
+            return Promise.all(imageFetchPromises);
+            // --- END MODIFIED LOGIC ---
+        })
+        .then(mergedData => {
+            inventoryData = mergedData; // Store the fully populated data
+            
             // Set initial items per page from dropdown
             itemsPerPage = itemsPerPageSelect ? itemsPerPageSelect.value : '5'; // Store as string '5'
 
-            // Apply default state (which is the reversed JSON data)
+            // Apply default state (which is the reversed and image-loaded data)
             applyFiltersAndSearch();
         })
         .catch(error => {
-            console.error("Error loading inventory:", error);
+            console.error("Error loading inventory or merging images:", error);
             if (loadingIndicator) {
-                loadingIndicator.textContent = `Error loading inventory data: ${error.message}. Please ensure 'inventory_data.json' is present in the same directory.`;
+                loadingIndicator.textContent = `Error loading inventory data: ${error.message}. Please ensure 'inventory_data.json' and all image JSON files are present.`;
                 loadingIndicator.className = 'col-span-full text-center p-10 text-red-600 font-semibold';
             }
             // Disable controls if data loading fails
@@ -236,7 +275,7 @@ function updatePaginationControls() {
         prevPageBtn.disabled = currentPage === 1;
         nextPageBtn.disabled = currentPage === totalPages;
     } else {
-        // Hide controls if there's only one page (including when"All" is selected)
+        // Hide controls if there's only one page (including when "All" is selected)
         paginationControls.classList.add('hidden');
     }
 }
@@ -280,21 +319,18 @@ function getModalContactHtml(item) {
         <div class="mt-4 pt-4 border-t border-gray-200">
             <h3 class="text-xl font-semibold text-gray-800 mb-3">Contact to Purchase:</h3>
             <div class="flex justify-evenly">
-                <!-- Email -->
                 <a href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}"
                    class="text-gray-700 hover:text-red-600 transition duration-150 flex flex-col items-center group" 
                    title="Email: ${CONTACT_INFO.email}">
                     <i class="fas fa-envelope text-3xl group-hover:scale-110"></i>
                     <span class="text-xs mt-1 text-gray-500 group-hover:text-red-600">Email</span>
                 </a>
-                <!-- Messenger -->
                 <a href="${CONTACT_INFO.messenger}" target="_blank"
                    class="text-gray-700 hover:text-blue-600 transition duration-150 flex flex-col items-center group" 
                    title="Facebook Messenger">
                     <i class="fab fa-facebook-messenger text-3xl group-hover:scale-110"></i>
                     <span class="text-xs mt-1 text-gray-500 group-hover:text-blue-600">Messenger</span>
                 </a>
-                <!-- Instagram -->
                 <a href="${CONTACT_INFO.instagram}" target="_blank"
                    class="text-gray-700 hover:text-pink-600 transition duration-150 flex flex-col items-center group" 
                    title="Instagram: @blankc_guitars">
