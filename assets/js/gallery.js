@@ -7,7 +7,7 @@ let itemsPerPage = '5';
 
 // Contact Information
 const CONTACT_INFO = {
-    email: 'spencerwhite620@gmail.com',
+    email: 'blankcguitars@gmail.com',
     messenger: 'http://m.me/blankc_guitars',
     instagram: 'https://ig.me/m/blankc_guitars'
 };
