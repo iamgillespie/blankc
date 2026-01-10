@@ -224,19 +224,20 @@ function createItemCard(item) {
                 </button>
                 
                 <label class="text-xs font-medium text-gray-500 text-center">Contact to Purchase <i class="fa fa-arrow-down"></i></label>
+                <a class="flex-1 py-2 text-center text-xs font-medium bg-gray-100 text-gray-700 hover:bg-pink-500 hover:text-white transition duration-150" href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}"><i class="fas fa-envelope me-2"></i>${CONTACT_INFO.email}</a>
                 <div class="flex justify-between space-x-2">
-                    <a href="${CONTACT_INFO.messenger}" target="_blank"
-                       class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150" 
-                       title="Contact via Messenger">
-                        <i class="fab fa-facebook-messenger"></i>
-                    </a>
                     <a href="${CONTACT_INFO.instagram}" target="_blank"
                        class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-pink-500 hover:text-white transition duration-150" 
                        title="Contact via Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
+                    <a href="${CONTACT_INFO.messenger}" target="_blank"
+                       class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150" 
+                       title="Contact via Messenger">
+                        <i class="fab fa-facebook-messenger"></i>
+                    </a>
                 </div>
-                <a class="flex-1 py-2 text-center text-xs font-medium bg-gray-100 text-gray-700 hover:bg-pink-500 hover:text-white transition duration-150" href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}"><i class="fas fa-envelope me-2"></i>${CONTACT_INFO.email}</a>
+                
             </div>
         </div>
     `;
