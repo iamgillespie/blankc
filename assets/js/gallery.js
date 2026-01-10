@@ -236,7 +236,7 @@ function createItemCard(item) {
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
-                <p class="text-xs text-blue-700 text-center"><a href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}"><i class="fas fa-envelope me-2"></i>${CONTACT_INFO.email}</a></p>
+                <a class="flex-1 py-2 text-center text-xs font-medium bg-gray-100 text-gray-700 hover:bg-pink-500 hover:text-white transition duration-150" href="mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(emailSubject)}"><i class="fas fa-envelope me-2"></i>${CONTACT_INFO.email}</a>
             </div>
         </div>
     `;
