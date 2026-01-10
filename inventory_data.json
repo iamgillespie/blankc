@@ -100,5 +100,17 @@
     "isSold": false,
     "descriptionHTML": "<p>Meet Ruby! Ruby is made of a beautiful ambrosia maple, then dyed orange for a truly stand-out kind of player! Maple neck with rosewood fretboard that features a zero fret at the nut for a smoother, more consistent sound. Ruby has an authentic, string-thru-body ashtray-style bridge with a Warp Core Pickups (from Arizona-- check them out sometime!) tele-style bridge pickup with tons of great punch and a Q Pickups (all the way from Croatia!) mustang-style neck pickup with fantastic warmth. Great high-end electronic components as well. This girl is unforgettable, just like her namesake! Located at Mr. Reid's Workshop in Independence, KS. Check out a demo here: https://youtu.be/awLIdJY0ZaY</p>",
     "imageFileJson": "BG-X-images.json"
+  },
+  {
+    "serial": "BG-XXXIV",
+    "itemHeader": "Skinny",
+    "shortDescription": "Black swampy ash skinny strat",
+    "keywords": [
+      "skinny"
+    ],
+    "price": 700,
+    "isSold": false,
+    "descriptionHTML": "<span style=\"color: rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small;\">My newest Skinny Strat! This one has a “swampy” ash body, birdseye maple neck with a hickory fingerboard. Gotoh hardware/tuners. The coolest part on this one is the @warpcorepickups loaded pickguard with a grease bucket circuit and a pretty cool setup for the 5-way switch. At one and five you’ve got the usual bridge or neck pickup, three the middle; but two and four offer coil-split versions of both pickups mixed with the middle. Tons of cool tones on this one!</span>",
+    "imageFileJson": "BG-XXXIV-images.json"
   }
 ]
