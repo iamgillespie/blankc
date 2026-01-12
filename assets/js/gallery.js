@@ -323,7 +323,7 @@ function getModalContactHtml(item) {
                     <i class="fas fa-envelope text-3xl group-hover:scale-110"></i>
                     <span class="text-xs mt-1 text-gray-500 group-hover:text-red-600">Email</span>
                 </a>
-                <a href="${CONTACT_INFO.messenger}" target="_blank"
+                <a href="${CONTACT_INFO.messenger}?text=Is ${item.itemHeader} ${item.serial} still availabe?" target="_blank"
                    class="text-gray-700 hover:text-blue-600 transition duration-150 flex flex-col items-center group" 
                    title="Facebook Messenger">
                     <i class="fab fa-facebook-messenger text-3xl group-hover:scale-110"></i>
