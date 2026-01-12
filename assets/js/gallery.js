@@ -8,7 +8,7 @@ let itemsPerPage = '5';
 // Contact Information
 const CONTACT_INFO = {
     email: 'blankcguitars@gmail.com',
-    messenger: 'http://m.me/blankc_guitars',
+    messenger: 'http://m.me/blankcguitars',
     instagram: 'https://ig.me/m/blankc_guitars'
 };
 
@@ -412,4 +412,5 @@ function openModal(item) {
 // --- Global Exports ---
 // Expose functions globally so index.html can call them after content injection
 window.openModal = openModal;
+
 window.loadInventory = loadInventory; // Exported for index.html
