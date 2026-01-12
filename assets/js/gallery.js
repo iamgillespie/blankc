@@ -231,7 +231,7 @@ function createItemCard(item) {
                        title="Contact via Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="${CONTACT_INFO.messenger}" target="_blank"
+                    <a href="${CONTACT_INFO.messenger}?text=Is ${item.itemHeader} serial number ${item.serial} still availabe?" target="_blank"
                        class="flex-1 py-2 text-center text-sm font-medium bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150" 
                        title="Contact via Messenger">
                         <i class="fab fa-facebook-messenger"></i>
@@ -412,5 +412,4 @@ function openModal(item) {
 // --- Global Exports ---
 // Expose functions globally so index.html can call them after content injection
 window.openModal = openModal;
-
 window.loadInventory = loadInventory; // Exported for index.html
